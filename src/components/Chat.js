@@ -10,6 +10,7 @@ const Chat = () => {
     const [input, setInput] = useState('')
     const [roomName, setRoomName] = useState('')
     const {roomId} = useParams()
+    const [messages, setMessages] = useState([])
 
     useEffect(() => {
         if(roomId) {
@@ -20,13 +21,18 @@ const Chat = () => {
                 setRoomName(snapShop.data().name)
                 setSeed(snapShop.data().name)
             })
+
+            db
+            .collection('rooms')
+            .doc(roomId).
+            collection("messages")
+            .orderBy('timestamp', 'asc')
+            .onSnapshot((snapshot) => 
+                setMessages(snapshot.docs.map((doc) => 
+                    doc.data()))
+            )
         }
     }, [roomId])
-
-    // useEffect(() => {
-    //     setSeed(Math.floor(Math.random()*5000))
-    // }, [])
-
     const sendMessage = (e) => {
         e.preventDefault()
 
@@ -53,13 +59,15 @@ const Chat = () => {
                 </div>
             </div>
             <div className="chat__body">
-                <p className={`chat__message ${true && 'chat__receiver'}`}>
-                    <span className="chat__name">Mrinal</span>
-                    Hey guys
-                    <span className="chat__timestamp">
-                        3:52 pm
-                    </span>
-                </p>
+                {messages.map(message => (
+                    <p className={`chat__message ${true && 'chat__receiver'}`}>
+                        <span className="chat__name">{message.name}</span>
+                        {message.message}
+                        <span className="chat__timestamp">
+                            {new Date(message.timestamp?.toDate()).toUTCString()}
+                        </span>
+                    </p>
+                ))}
             </div>
             <div className="chat__footer">
                 <InsertEmoticon/>

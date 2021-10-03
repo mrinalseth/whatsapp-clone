@@ -1,12 +1,14 @@
 import { Avatar, IconButton } from '@material-ui/core'
 import { Chat, DonutLarge, MoreVert, SearchOutlined } from '@material-ui/icons'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './sidebar.css'
 import SidebarChat from './SidebarChat'
 import db from '../firebase'
+import {Context as AuthContext} from '../context/AuthContext'
 
 
 const Sidebar = () => {
+    const {state} = useContext(AuthContext)
     const [rooms, setRooms] = useState([])
     useEffect(() => {
         db
@@ -23,7 +25,7 @@ const Sidebar = () => {
     return (
         <div className="sidebar">
             <div className="sidebar__header">
-                <Avatar/>
+                <Avatar src={state.user.photoURL}/>
                 <div className="sidebar__headerRight">
                     <IconButton>
                         <DonutLarge/>

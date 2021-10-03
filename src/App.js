@@ -2,13 +2,12 @@ import './App.css';
 import Sidebar from './components/Sidebar';
 import Chat from './components/Chat';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import Login from './components/Login';
 import {Context as AuthContext} from './context/AuthContext'
 
 function App() {
   const {state} = useContext(AuthContext)
-  const [user, setUser] = useState(false)
   return (
     <div className="app">
       {state.user === null ? (

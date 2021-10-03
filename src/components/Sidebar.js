@@ -1,10 +1,16 @@
 import { Avatar, IconButton } from '@material-ui/core'
 import { Chat, ChatBubble, DonutLarge, MoreVert, SearchOutlined } from '@material-ui/icons'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './sidebar.css'
 import SidebarChat from './SidebarChat'
+import db from '../firebase'
+
 
 const Sidebar = () => {
+    const [rooms, setRooms] = useState([])
+    useEffect(() => {
+
+    }, [])
     return (
         <div className="sidebar">
             <div className="sidebar__header">
@@ -28,7 +34,7 @@ const Sidebar = () => {
                 </div>
             </div>
             <div className="sidebar__chats">
-                <SidebarChat/>
+                <SidebarChat addNewChat />
                 <SidebarChat/>
                 <SidebarChat/>
                 <SidebarChat/>

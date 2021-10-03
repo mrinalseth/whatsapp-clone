@@ -1,11 +1,14 @@
 import { Avatar, IconButton } from '@material-ui/core'
 import { AttachFile, InsertEmoticon, Mic, MoreVert, SearchOutlined } from '@material-ui/icons'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import db from '../firebase'
 import './chat.css'
+import {Context as AuthContext} from '../context/AuthContext'
+import firebase from 'firebase/compat/app'
 
 const Chat = () => {
+    const {state} = useContext(AuthContext)
     const [seed, setSeed] = useState('')
     const [input, setInput] = useState('')
     const [roomName, setRoomName] = useState('')
@@ -35,7 +38,15 @@ const Chat = () => {
     }, [roomId])
     const sendMessage = (e) => {
         e.preventDefault()
-
+        db
+        .collection('rooms')
+        .doc(roomId)
+        .collection('messages')
+        .add({
+            message: input,
+            name: state.user.displayName,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        })
         setInput('')
     }
     return (
@@ -60,7 +71,7 @@ const Chat = () => {
             </div>
             <div className="chat__body">
                 {messages.map(message => (
-                    <p className={`chat__message ${true && 'chat__receiver'}`}>
+                    <p className={`chat__message ${message.name === state.user.displayName && 'chat__receiver'}`}>
                         <span className="chat__name">{message.name}</span>
                         {message.message}
                         <span className="chat__timestamp">

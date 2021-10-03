@@ -4,6 +4,8 @@ const authReducer = (state, action) => {
     switch(action.type) {
         case 'login':
             return {...state, user: action.payload}
+        case 'logout':
+            return {...state, user: null}
         default:
             return state
     }
@@ -18,6 +20,20 @@ const login = (dispatch) => {
                 payload: userInfo
             })
         }catch (err) {
+
+        }
+    }
+}
+
+const logout = (dispatch) => {
+    return async () => {
+        try {
+            await localStorage.removeItem('userInfo')
+            dispatch({
+                type: 'logout',
+                payload: null
+            })
+        }catch(err) {
 
         }
     }
@@ -40,7 +56,8 @@ export const {Provider, Context} = createDataContext(
     authReducer,
     {
         login,
-        localSignin
+        localSignin,
+        logout
     },
     {
         user: null

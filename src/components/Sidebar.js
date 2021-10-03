@@ -8,7 +8,7 @@ import {Context as AuthContext} from '../context/AuthContext'
 
 
 const Sidebar = () => {
-    const {state} = useContext(AuthContext)
+    const {state, logout} = useContext(AuthContext)
     const [rooms, setRooms] = useState([])
     useEffect(() => {
         db
@@ -22,10 +22,15 @@ const Sidebar = () => {
             }))
         })
     }, [])
+    const onClick = () => {
+        logout()
+    }
     return (
         <div className="sidebar">
             <div className="sidebar__header">
-                <Avatar src={state.user.photoURL}/>
+                <IconButton onClick={onClick}>
+                    <Avatar src={state.user.photoURL}/>
+                </IconButton>
                 <div className="sidebar__headerRight">
                     <IconButton>
                         <DonutLarge/>

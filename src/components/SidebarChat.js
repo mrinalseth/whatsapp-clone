@@ -11,14 +11,14 @@ const SidebarChat = (props) => {
         const roomName = prompt('Please enter name for chat')
 
         if(roomName){
-            //Database stuff
+            return props.addNewRoom(roomName)
         }
     }
     return !props.addNewChat ? (
         <div className="sidebarChat">
             <Avatar src={`https://avatars.dicebear.com/api/avataaars/${seed}.svg`} />
             <div className="sidebarChat__info">
-                <h2>{props.roomName}</h2>
+                <h2>{props.name}</h2>
                 <p>Last message...</p>
             </div>
         </div>

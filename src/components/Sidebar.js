@@ -1,5 +1,5 @@
 import { Avatar, IconButton } from '@material-ui/core'
-import { Chat, ChatBubble, DonutLarge, MoreVert, SearchOutlined } from '@material-ui/icons'
+import { Chat, DonutLarge, MoreVert, SearchOutlined } from '@material-ui/icons'
 import React, { useEffect, useState } from 'react'
 import './sidebar.css'
 import SidebarChat from './SidebarChat'
@@ -53,7 +53,7 @@ const Sidebar = () => {
                         })
                     }} />
                 {rooms.map((room) => {
-                    return <SidebarChat key={room.id} name = {room.data.name} />
+                    return <SidebarChat id={room.id} key={room.id} name = {room.data.name} />
                 })}
             </div>
         </div>

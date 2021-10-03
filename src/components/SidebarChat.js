@@ -5,7 +5,6 @@ import './sidebarChat.css'
 
 const SidebarChat = (props) => {
     const [seed, setSeed] = useState('0')
-    // const {params} = useParams()
     useEffect(() => {
         setSeed(Math.floor(Math.random()*5000))
     }, [])
@@ -17,7 +16,7 @@ const SidebarChat = (props) => {
         }
     }
     return !props.addNewChat ? (
-        <Link style={{textDecoration:"none"}} to={`/rooms/${props.id}`}>
+        <Link style={{textDecoration:"none", color:"black"}} to={`/rooms/${props.id}`}>
             <div className="sidebarChat">
                 <Avatar src={`https://avatars.dicebear.com/api/avataaars/${seed}.svg`} />
                 <div className="sidebarChat__info">
